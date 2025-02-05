@@ -13,7 +13,6 @@ const AllJobs = () => {
     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/jobs`);
     setJobs(data);
   };
-  console.log(jobs);
   return (
     <div className="container px-6 py-10 mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between">
       <div>
@@ -24,9 +23,7 @@ const AllJobs = () => {
               id="category"
               className="border p-4 rounded-lg"
             >
-              <option value="https://cdn3d.iconscout.com/3d/premium/thumb/creative-idea-3d-icon-download-in-png-blend-fbx-gltf-file-formats--innovation-innovative-school-and-education-pack-icons-9889906.png">
-                Filter By Category
-              </option>
+              <option value="">Filter By Category</option>
               <option value="Web Development">Web Development</option>
               <option value="Graphics Design">Graphics Design</option>
               <option value="Digital Marketing">Digital Marketing</option>
@@ -54,9 +51,7 @@ const AllJobs = () => {
               id="category"
               className="border p-4 rounded-md"
             >
-              <option value="https://cdn3d.iconscout.com/3d/premium/thumb/creative-idea-3d-icon-download-in-png-blend-fbx-gltf-file-formats--innovation-innovative-school-and-education-pack-icons-9889906.png">
-                Sort By Deadline
-              </option>
+              <option value="">Sort By Deadline</option>
               <option value="dsc">Descending Order</option>
               <option value="asc">Ascending Order</option>
             </select>
@@ -64,14 +59,9 @@ const AllJobs = () => {
           <button className="btn">Reset</button>
         </div>
         <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
+          {jobs.map((job) => {
+            return <JobCard key={job._id} job={job} />;
+          })}
         </div>
       </div>
     </div>
