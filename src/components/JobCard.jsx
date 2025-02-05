@@ -1,19 +1,33 @@
 /* eslint-disable react/prop-types */
-
+import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 const JobCard = ({ job }) => {
-  const deadline = job.deadline.split('T')[0];
+  const deadline = format(new Date(job.deadline), 'PP');
   return (
     <Link
-      to={`/job/1`}
+      to={`/job/${job._id}`}
       className="w-full max-w-sm px-4 py-3 bg-white rounded-md shadow-md hover:scale-[1.05] transition-all"
     >
       <div className="flex items-center justify-between">
         <span className="text-xs font-light text-gray-800 ">
           Deadline: {deadline}
         </span>
-        <span className="px-3 py-1 text-[8px] text-blue-800 uppercase bg-blue-200 rounded-full ">
+        <span
+          className={`px-3 py-1 ${
+            job.category === 'Web Development' &&
+            ' text-blue-600 bg-blue-100/30'
+          } 
+                                ${
+                                  job.category === 'Digital Marketing' &&
+                                  ' text-red-600 bg-red-100/30'
+                                }
+                                ${
+                                  job.category === 'Graphics Design' &&
+                                  ' text-yellow-600 bg-yellow-100/30'
+                                }
+                                text-xs  rounded-full`}
+        >
           {job.category}
         </span>
       </div>
