@@ -3,8 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const MyBids = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
 
   const [bids, setBids] = useState([]);
@@ -13,8 +15,9 @@ const MyBids = () => {
     fetchbids();
   }, [user]);
   const fetchbids = async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/bids/${user?.email}`,
+    const { data } = await axiosSecure.get(
+      `/bids/${user?.email}`,
+      // { withCredentials: true },
     );
     setBids(data);
   };
