@@ -10,6 +10,8 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 export const AuthContext = createContext(null);
 const googleProvider = new GoogleAuthProvider();
 
@@ -46,9 +48,41 @@ const AuthProvider = ({ children }) => {
 
   // onAuthStateChange
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser?.email) {
+        setUser(currentUser);
+        try {
+          const { data } = await axios.post(
+            `${import.meta.env.VITE_API_URL}/jwt`,
+            {
+              email: currentUser?.email,
+            },
+            {
+              withCredentials: true,
+            },
+          );
+          console.log(data);
+        } catch (err) {
+          toast.error('jwt ' + err.message || err);
+        }
+      } else {
+        setUser(currentUser);
+
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_API_URL}/logout`,
+
+            {
+              withCredentials: true,
+            },
+          );
+          console.log(data);
+        } catch (err) {
+          toast.error('jwt ' + err.message || err);
+        }
+      }
       setLoading(false);
+      // console.log(currentUser);
     });
     return () => {
       return unsubscribe();
