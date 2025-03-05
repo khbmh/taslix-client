@@ -18,7 +18,7 @@ const JobDetails = () => {
   useEffect(() => {
     fetchJob();
   }, [id]);
-  console.log(job);
+  // console.log(job);
   const fetchJob = async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_API_URL}/job/${id}`,

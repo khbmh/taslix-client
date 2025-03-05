@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
               withCredentials: true,
             },
           );
-          console.log(data);
+          // console.log(data);
         } catch (err) {
           toast.error('jwt ' + err.message || err);
         }
@@ -76,7 +76,7 @@ const AuthProvider = ({ children }) => {
               withCredentials: true,
             },
           );
-          console.log(data);
+          // console.log(data);
         } catch (err) {
           toast.error('jwt ' + err.message || err);
         }
